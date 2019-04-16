@@ -1,5 +1,3 @@
-import time
-import sys
 blank = "test"
 reinstall = {
     "question": "blank",
