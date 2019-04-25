@@ -1,3 +1,17 @@
+import wmi
+from hurry.filesize import size
+
+def pcinfo():
+    pc = wmi.WMI()
+    pc_info = pc.Win32_ComputerSystem()[0]
+    proc_info = pc.Win32_Processor()[0]
+    system_ram = size(int(pc_info.TotalPhysicalMemory))
+    gpu_info = pc.Win32_VideoController()[0]
+
+    print('CPU: {0}'.format(proc_info.Name))
+    print('RAM: {0}B'.format(system_ram))
+    print('Graphics Card: {0}'.format(gpu_info.Name))
+
 blank = "test"
 reinstall = {
     "question": "Sometimes a driver or other critical part of your system gets installed improperly causing seemingly random crashing a clean install should fix this",
@@ -17,7 +31,7 @@ diditfix2 = {
 }
 itscrashy = {
     "question": "Are you positive the temps are fine? Crashing could be caused from an overheating pc you can use a program like HWMonitor to monitor PC temperatures.",
-    "answers": {"yes": ramtest, "no": }
+    "answers": {"yes": ramtest, "no": blank}
 }
 oldpc = {
     "question": "A PC of this age should really be upgraded technology has really improved with time",
@@ -62,7 +76,16 @@ doespcboot = {
     "question": "Does the pc boot?",
     "answers": {"yes": boots, "no": noboot}
 }
-current_question = doespcboot
+pcinformation = {
+    "question": pcinfo(),
+    "answers": ()}
+Start = {
+    "question": "Hello and welcome to my PC troubleshooter would you like info about your pc or would you like to run the troubleshooter (type pcinfo or troubleshooter)",
+    "answers": {"pcinfo": pcinformation, "troubleshooter": doespcboot}
+}
+
+
+current_question = Start
 while True:
     print(current_question["question"])
     if len(current_question["answers"]) == 0:
