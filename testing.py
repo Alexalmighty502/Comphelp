@@ -7,10 +7,8 @@ def pcinfo():
     proc_info = pc.Win32_Processor()[0]
     system_ram = size(int(pc_info.TotalPhysicalMemory))
     gpu_info = pc.Win32_VideoController()[0]
-
-    print('CPU: {0}'.format(proc_info.Name))
-    print('RAM: {0}B'.format(system_ram))
-    print('Graphics Card: {0}'.format(gpu_info.Name))
+    info_string = f"""CPU : {proc_info.Name}\nRAM: {system_ram}B\nGraphics Card: {gpu_info.Name}"""  # formatting Figuring this out took far too long
+    return info_string  # saves the users info to be displayed later if the user requests it
 
 blank = "test"
 reinstall = {
@@ -31,13 +29,13 @@ diditfix2 = {
 }
 itscrashy = {
     "question": "Are you positive the temps are fine? Crashing could be caused from an overheating pc you can use a program like HWMonitor to monitor PC temperatures.",
-    "answers": {"yes": ramtest, "no": blank}
+    "answers": {"yes": ramtest, "no": "If temps in your system hit 95°-100°c it is most likely shutting itself of to protect from damage if the temperature is this high you will need to replace your cooling setup for something stronger. "}
 }
 oldpc = {
     "question": "A PC of this age should really be upgraded technology has really improved with time",
     "answers": ()}  # Endpoint
 virusandmalware = {
-    "question": "Do you test for viruses and malware on atleast a monthly basis? Do note however antivirus programs are rather poor at detecting malware so its recommended to have a antivirus program AND a antimalware program like Malwarebytes at the same time.",
+    "question": "Do you test for viruses and malware on at a monthly basis? Do note however antivirus programs are rather poor at detecting malware so its recommended to have a antivirus program AND a antimalware program like Malwarebytes at the same time.",
     "answers": {"yes": reinstall, "no": "installing antimalware and antivirus software is critical to keep your pc healthy I HIGHLY recommend you install them if you don't have them."}
 }
 currentpc = {
@@ -49,13 +47,20 @@ agetest = {
     "question": "Is the PC 7 years older?",
     "answers": {"yes": oldpc, "no": currentpc}
 }
-
+deadmobo = {
+    "question": "If the PC is still not working at this point its most likely the Motherboard is dead",
+    "answers": {()}  # Endpoint
+}
+opencase = {
+    "question": "Remove the Motherboard, Ram, Power Supply Unit, and if your PC lacks a integrated GPU the GPU and reconnect everything on a nonconductive surface like cardboard this should help to see if there's a short-circuit. Did this help?",
+    "answers": {"yes": itfixed, "no": deadmobo}
+}
 powertrip = {
     "question": "Are you sure the power socket is not tripped?",
-    "answers": {"yes": blank, "no": "You can check by using a simple charger or any other device"}
+    "answers": {"yes": opencase, "no": "You can check by using a simple charger or any other device"}
 }
 enoughpower = {
-    "question": "If the PSU works and your PC still shows no signs of life it could point to a faulty motherboard or CPU ",
+    "question": "Did you recently upgrade your PC components?  ",
     "answers": ()}  # Endpoint
 checkpsu = {
     "question": "Are you sure the Psu works?, This can be tested by using a paper clip to jump pin 3 and for on the clip side of the 24 pin",
@@ -83,7 +88,6 @@ Start = {
     "question": "Hello and welcome to my PC troubleshooter would you like info about your pc or would you like to run the troubleshooter (type pcinfo or troubleshooter)",
     "answers": {"pcinfo": pcinformation, "troubleshooter": doespcboot}
 }
-
 
 current_question = Start
 while True:
