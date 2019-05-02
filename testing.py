@@ -12,8 +12,6 @@ def pcinfo():
     return info_string  # saves the users info to be displayed later if the user requests it
 
 
-blank = "test"
-
 reinstall = {
     "question": "Sometimes a driver or other critical part of your system gets installed improperly causing seemingly random crashing a clean install should fix this.",
     "answers": ()
@@ -74,7 +72,7 @@ diditfix1 = {"question": "Did this fix your issue?",
              "answers": {"yes": itfixed, "no": checkpsu}
 }
 noboot = {
-    "question": "Check to see if are any loose connections namely the 20-24 pin, cpu 6 pin and pcie power cords. Did this help? (respond with yes or no)",
+    "question": "Check to see if are any loose connections namely the 20-24 pin, cpu 6 pin (If present) and pcie power cords. Did this help? (respond with yes or no)",
     "answers": {"yes": diditfix1, "no": checkpsu}
 }
 boots = {
@@ -112,7 +110,7 @@ pcinformation = {
     "question": pcinfo(),
     "answers": ()}
 Start = {
-    "question": "Hello and welcome to my PC troubleshooter would you like info about your pc or would you like to run the troubleshooter (type pcinfo or troubleshooter)",
+    "question": "Hello and welcome to my PC troubleshooter would you like info about your pc or would you like to run the troubleshooter? (type pcinfo or troubleshooter)",
     "answers": {"pcinfo": pcinformation, "troubleshooter": doespcboot}
 }
 
